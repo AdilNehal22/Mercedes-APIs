@@ -1,24 +1,24 @@
 [
      {
-          "id": 0,
-          "model": "Mercedes-Benz GLA 259",
+          
+          "name": "Mercedes-Benz GLA 259",
           "color": "purple",
           "price": 65342
      },
      {
-          "id": 1,
-          "model": "Mercedes-Benz GLA 250",
+          
+          "name": "Mercedes-Benz GLA 250",
           "color": "Black",
           "price": 34250
      },
      {
-          "id": 2,
-          "model": "Mercedes-Benz C 300 ",
+          
+          "name": "Mercedes-Benz C 300 ",
           "color": "red",
           "price": 99765
      },
      {
-          "id": 3,
+          
           "name": "Z223 Mercedes-Maybach",
           "color": "black",
           "price": 99765

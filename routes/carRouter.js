@@ -12,7 +12,7 @@ router
 router
 .route('/:id')
 .get(carController.getACar)
-.patch(carController.patchCar)
+.patch(carController.authorizeReq, carController.patchCar)
 .delete(carController.deleteCar)
 
 module.exports = router
