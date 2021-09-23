@@ -1,8 +1,8 @@
 const express = require('express');
-const fs = require('fs');
-const mongoose = require('mongoose');
 const Cars = require('./../models/carsModel');
 const APIFeatures = require('./../Utils/APIFeatures');
+const catchAsync = require('./../errorHandling/catchAsync');
+const AppError = require('./../errorHandling/AppError');
 
 
 exports.authorizeReq = (req, res, next)=>{
@@ -15,8 +15,8 @@ exports.authorizeReq = (req, res, next)=>{
      next();
 }
 
-exports.getAllCars = async(req, res)=>{
-     try{
+exports.getAllCars = catchAsync(async(req, res, next)=>{
+     
           const features = new APIFeatures(Cars.find(), req.query)
           .filtering().sorting().limitingFields().pagenation();
           const cars = await features.query;
@@ -26,86 +26,49 @@ exports.getAllCars = async(req, res)=>{
                data: {
                     cars
                }
-          })
-     }catch(err){
-          console.log(err);
-          res.status(400).json({
-               status: 'failed',
-               message: err
-          })
+          });
+});
 
-     }
-}
-
-exports.createCar = async (req, res)=>{
-     try{
+exports.createCar = catchAsync(async (req, res, next)=>{
+     
           const newCar = await Cars.create(req.body);
           res.status(201).json({
                status: 'success',
                data: {
                     mercedes: newCar
                }
-          })
-     }catch(err){
-          console.log(err)
-          res.status(400).json({
-               status: 'failed',
-               message: 'Invalid or incomplete request'
-          })
-     }
-}
+          });
+});
 
-exports.getACar = async (req, res)=>{
-     try{
+exports.getACar = catchAsync(async (req, res)=>{
+    
           const Acar = await Cars.findById(req.params.id);
           res.status(200).json({
                status : 'success',
                data: {
                     Acar
                }
-          })
-     }
+          });
+});
 
-     catch(err){
-          res.status(400).json({
-               status : 'failed',
-               message: err
-          })
-     }
-}
+exports.patchCar = catchAsync(async(req, res)=>{
 
-exports.patchCar = async(req, res)=>{
-     try{
-          const updateCar = await Cars.findByIdAndUpdate(req.params.id, req.body, {
+   updateCar = await Cars.findByIdAndUpdate(req.params.id, req.body, {
                new: true,
                runValidators: true
-          })
+          });
                return res.status(201).json({
                     status : 'success',
                     data: {
                          updateCar
                     }
-               })     
-     }catch(err){
-          res.status(400).json({
-               status: 'failed',
-               message: 'Invalid request'
-          })
-     }
-     
-}
+               });     
+});
 
-exports.deleteCar = async (req, res)=>{
-     try{
+exports.deleteCar = catchAsync(async (req, res)=>{
           const delCar = await Cars.findByIdAndDelete(req.params, req.body);
           res.status(204).json({
                status: 'success',
                data: null
-          })
-     }catch(err){
-          res.status(400).json({
-               status: 'failed',
-               message: 'Invalid request'
-          })
-     }
-};
+          });
+});
