@@ -1,5 +1,5 @@
 # Mercedes-APIs
-I created the CRUD APIs and tried to make Mercedes website backend server. 
+I created the REST CRUD APIs and tried to make Mercedes website backend server. 
 I used MongoDB and Mongoose to fetch some basic data. 
 
 I made this after learning express and set server with it and Node.js. 
