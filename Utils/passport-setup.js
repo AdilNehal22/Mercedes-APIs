@@ -5,12 +5,12 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../errorHandling/catchAsync');
 
 passport.serializeUser((user, done)=>{
-    done(null, user.id);
+    done(null, user);
 });
 
 passport.deserializeUser((id, done)=>{
     User.findById(id).then((user)=>{
-        done(null, user.id);
+        done(null, user);
     });
 });
 
@@ -23,10 +23,9 @@ passport.use(new GoogleStrategy({
 (accessToken, refreshToken, profile, done) => {
     // check if user already exists in our own db
     User.findOne({googleId: profile.id}).then((currentUser) => {
-        console.log(profile)
         if(currentUser){
             // already have this user
-            console.log('user is: ', currentUser);
+            console.log(`user is: ${currentUser}`);
             done(null, currentUser);
             
         } else {
@@ -35,7 +34,7 @@ passport.use(new GoogleStrategy({
                 name: profile.displayName,
                 googleId: profile.id
             }).save({validateBeforeSave: false}).then((newUser) => {
-                console.log('created new user: ', newUser);
+                console.log(`created new user: ${newUser}`);
                 done(null, newUser);
             });
         }
